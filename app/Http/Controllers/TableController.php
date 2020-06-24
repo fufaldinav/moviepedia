@@ -29,7 +29,7 @@ class TableController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @param Request $request
+     * @param  Request  $request
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
