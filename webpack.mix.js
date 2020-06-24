@@ -12,4 +12,11 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .extract()
+    .version()
+    .browserSync({
+        proxy: "http://moviepedia.ddns.net",
+        logLevel: "debug",
+        host: "192.168.1.8"
+    });
