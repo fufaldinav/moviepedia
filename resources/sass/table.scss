@@ -1,0 +1,91 @@
+@import 'app';
+
+html, body {
+    height: 100%;
+}
+
+body {
+    padding-top: 56px;
+}
+
+a.btn:disabled, button.btn:disabled {
+    cursor: default;
+}
+
+.app-table {
+    table-layout: fixed;
+    max-height: calc(100vh - 56px);
+    overflow: auto;
+    font-size: 0.875rem;
+}
+
+.app-table-th:hover .app-hide-field-icon {
+    opacity: 1;
+}
+
+.app-table.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 251, 0.075);
+}
+
+.app-table-cell-wrapper {
+    height: 1.25rem;
+}
+
+.app-hide-field-icon {
+    opacity: 0;
+    transition: opacity 0.25s;
+}
+
+.app-filters-menu label {
+    font-weight: bold;
+}
+
+.app-filters-menu .form-check-label {
+    font-weight: normal;
+}
+
+.app-filters-menu input::placeholder {
+    font-style: italic;
+}
+
+.app-filters-menu .form-group {
+    margin-bottom: 0.25rem;
+}
+
+.app-sort-icon {
+    opacity: 0.5;
+    transition: opacity 0.25s;
+}
+
+.app-sort-icon-active {
+    opacity: 1;
+}
+
+.app-sort-icon:hover {
+    opacity: 1;
+}
+
+.app-phrase-search-input::placeholder {
+    font-style: italic;
+}
+
+.app-paginator {
+    opacity: 0.8;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    transition: opacity 0.5s 1s;
+}
+
+.app-paginator:hover {
+    opacity: 1;
+    transition: opacity 0.25s;
+}
+
+.app-paginator-current-page-button::after {
+    display: none;
+}
+
+.app-paginator-page-selector {
+    min-width: 12rem;
+}
