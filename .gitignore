@@ -14,3 +14,7 @@ yarn-error.log
 /.idea
 _ide_helper.php
 .phpstorm.meta.php
+
+/public/js/*.js
+/public/css/*.css
+/public/mix-manifest.json
