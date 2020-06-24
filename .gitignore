@@ -16,6 +16,7 @@ _ide_helper.php
 _ide_helper_models.php
 .phpstorm.meta.php
 
+/storage/tmdb
 /public/js/*.js
 /public/css/*.css
 /public/mix-manifest.json
