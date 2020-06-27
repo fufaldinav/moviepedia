@@ -3,7 +3,7 @@
 namespace App;
 
 /**
- * App\LocalCollection
+ * App\LocalCollection.
  *
  * @property int $id
  * @property string $name

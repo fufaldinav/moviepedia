@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {Movie} from './movie';
+import { Movie } from './movie';
 
 Vue.use(Vuex);
 
 function naturalCompare(a, b) {
-    let ax = [], bx = [];
+    let ax = [],
+        bx = [];
 
     a.replace(/(\d+)|(\D+)/g, function (_, $1, $2) {
         ax.push([$1 || Infinity, $2 || '']);
@@ -17,7 +18,7 @@ function naturalCompare(a, b) {
     while (ax.length && bx.length) {
         let an = ax.shift();
         let bn = bx.shift();
-        let nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+        let nn = an[0] - bn[0] || an[1].localeCompare(bn[1]);
         if (nn) return nn;
     }
 
@@ -25,7 +26,7 @@ function naturalCompare(a, b) {
 }
 
 function isNumber(value) {
-    return typeof value === 'number' && isFinite(value) && ! isNaN(value);
+    return typeof value === 'number' && isFinite(value) && !isNaN(value);
 }
 
 export default new Vuex.Store({
@@ -61,33 +62,33 @@ export default new Vuex.Store({
         sortField: null,
         sortOrder: 'asc',
         filters: {
-            imdb_id: null,           //String - IMDB ID для поиска только одного фильма
-            ids: [],                 //Integer[]
-            search: null,            //String
-            adult: null,             //Boolean
-            budget_min: null,        //Integer
-            budget_max: null,        //Integer
-            genres: [],              //String[]
+            imdb_id: null, //String - IMDB ID для поиска только одного фильма
+            ids: [], //Integer[]
+            search: null, //String
+            adult: null, //Boolean
+            budget_min: null, //Integer
+            budget_max: null, //Integer
+            genres: [], //String[]
             original_language: null, //String
-            popularity_min: null,    //Float
-            popularity_max: null,    //Float
-            release_date_min: null,  //String - дата в формате YYYY-MM-DD
-            release_date_max: null,  //String - дата в формате YYYY-MM-DD
-            revenue_min: null,       //Integer
-            revenue_max: null,       //Integer
-            runtime_min: null,       //Float
-            runtime_max: null,       //Float
-            spoken_languages: [],    //String[]
-            status: null,            //String - статус выхода фильма
-            vote_average_min: null,  //Float
-            vote_average_max: null,  //Float
-            vote_count_min: null,    //Integer
-            vote_count_max: null,    //Integer
+            popularity_min: null, //Float
+            popularity_max: null, //Float
+            release_date_min: null, //String - дата в формате YYYY-MM-DD
+            release_date_max: null, //String - дата в формате YYYY-MM-DD
+            revenue_min: null, //Integer
+            revenue_max: null, //Integer
+            runtime_min: null, //Float
+            runtime_max: null, //Float
+            spoken_languages: [], //String[]
+            status: null, //String - статус выхода фильма
+            vote_average_min: null, //Float
+            vote_average_max: null, //Float
+            vote_count_min: null, //Integer
+            vote_count_max: null, //Integer
         },
         filtersRanges: {
             budget_min: 0,
             budget_max: 999999999,
-            popularity_min: 0.00,
+            popularity_min: 0.0,
             popularity_max: 9999.99,
             release_date_min: '1874-12-09',
             release_date_max: '2174-12-08',
@@ -95,8 +96,8 @@ export default new Vuex.Store({
             revenue_max: 9999999999,
             runtime_min: 0.01,
             runtime_max: 9999.99,
-            vote_average_min: 0.00,
-            vote_average_max: 10.00,
+            vote_average_min: 0.0,
+            vote_average_max: 10.0,
             vote_count_min: 0,
             vote_count_max: 9999999999,
         },
@@ -111,25 +112,25 @@ export default new Vuex.Store({
     },
 
     getters: {
-        pageCount: state => {
+        pageCount: (state) => {
             return Math.ceil(state.dataSize / state.pageSize);
         },
 
-        getDisplayedFields: state => {
-            return Object.keys(state.fields).filter(key => state.fields[key].shown === true);
+        getDisplayedFields: (state) => {
+            return Object.keys(state.fields).filter((key) => state.fields[key].shown === true);
         },
 
-        getHiddenFields: state => {
-            return Object.keys(state.fields).filter(key => state.fields[key].shown === false);
+        getHiddenFields: (state) => {
+            return Object.keys(state.fields).filter((key) => state.fields[key].shown === false);
         },
 
-        getSortableFields: state => {
-            return Object.keys(state.fields).filter(key => {
+        getSortableFields: (state) => {
+            return Object.keys(state.fields).filter((key) => {
                 return state.fields[key].hasOwnProperty('sortable') && state.fields[key].sortable === true;
             });
         },
 
-        isAnyFilterExceptSearch: state => {
+        isAnyFilterExceptSearch: (state) => {
             for (const filterName in state.filters) {
                 if (filterName === 'search') continue;
                 if (Array.isArray(state.filters[filterName])) {
@@ -141,27 +142,27 @@ export default new Vuex.Store({
             return false;
         },
 
-        getReleaseDateMinValueInMs: state => {
+        getReleaseDateMinValueInMs: (state) => {
             return Date.parse(state.filtersRanges.release_date_min);
         },
 
-        getReleaseDateMaxValueInMs: state => {
+        getReleaseDateMaxValueInMs: (state) => {
             return Date.parse(state.filtersRanges.release_date_max);
         },
 
-        getCollections: state => {
+        getCollections: (state) => {
             return state.collections.sort((a, b) => {
                 return naturalCompare(a.name, b.name);
             });
         },
 
-        getCompanies: state => {
+        getCompanies: (state) => {
             return state.companies.sort((a, b) => {
                 return naturalCompare(a.name, b.name);
             });
         },
 
-        getCountries: state => {
+        getCountries: (state) => {
             return state.countries.sort((a, b) => {
                 if (a.name < b.name) return -1;
                 if (a.name > b.name) return 1;
@@ -169,7 +170,7 @@ export default new Vuex.Store({
             });
         },
 
-        getGenres: state => {
+        getGenres: (state) => {
             return state.genres.sort((a, b) => {
                 if (a.name < b.name) return -1;
                 if (a.name > b.name) return 1;
@@ -177,7 +178,7 @@ export default new Vuex.Store({
             });
         },
 
-        getLanguages: state => {
+        getLanguages: (state) => {
             return state.languages.sort((a, b) => {
                 if (a.name < b.name) return -1;
                 if (a.name > b.name) return 1;
@@ -185,7 +186,7 @@ export default new Vuex.Store({
             });
         },
 
-        getStatuses: state => {
+        getStatuses: (state) => {
             return state.statuses.sort((a, b) => {
                 if (a < b) return -1;
                 if (a > b) return 1;
@@ -193,7 +194,7 @@ export default new Vuex.Store({
             });
         },
 
-        getQuery: state => {
+        getQuery: (state) => {
             return {
                 page: state.currentPageNumber,
                 page_size: state.pageSize,
@@ -215,7 +216,8 @@ export default new Vuex.Store({
                 revenue_max: isNumber(state.filters.revenue_max) ? state.filters.revenue_max : undefined,
                 runtime_min: isNumber(state.filters.runtime_min) ? state.filters.runtime_min : undefined,
                 runtime_max: isNumber(state.filters.runtime_max) ? state.filters.runtime_max : undefined,
-                spoken_languages: state.filters.spoken_languages.length > 0 ? state.filters.spoken_languages : undefined,
+                spoken_languages:
+                    state.filters.spoken_languages.length > 0 ? state.filters.spoken_languages : undefined,
                 status: state.filters.status || undefined,
                 vote_average_min: isNumber(state.filters.vote_average_min) ? state.filters.vote_average_min : undefined,
                 vote_average_max: isNumber(state.filters.vote_average_max) ? state.filters.vote_average_max : undefined,
@@ -363,7 +365,11 @@ export default new Vuex.Store({
             }
 
             let sortField = query.sort_field || null;
-            if (typeof sortField === 'string' && sortField.length > 0 && getters.getSortableFields.indexOf(sortField) === -1) {
+            if (
+                typeof sortField === 'string' &&
+                sortField.length > 0 &&
+                getters.getSortableFields.indexOf(sortField) === -1
+            ) {
                 sortField = null;
             }
             if (sortField !== state.sortField) {
@@ -390,7 +396,7 @@ export default new Vuex.Store({
             let ids = query.ids ? (Array.isArray(query.ids) ? query.ids : [query.ids]) : [];
             for (let id of ids) {
                 id = parseInt(id, 10);
-                if (! isNaN(id) && state.filters.ids.indexOf(id) === -1) {
+                if (!isNaN(id) && state.filters.ids.indexOf(id) === -1) {
                     commit('addIdToFilter', id);
                 }
             }
@@ -417,7 +423,11 @@ export default new Vuex.Store({
             }
 
             let budgetMin = query.budget_min ? parseInt(query.budget_min, 10) : NaN;
-            if (isNaN(budgetMin) || budgetMin < state.filtersRanges.budget_min || budgetMin > state.filtersRanges.budget_max) {
+            if (
+                isNaN(budgetMin) ||
+                budgetMin < state.filtersRanges.budget_min ||
+                budgetMin > state.filtersRanges.budget_max
+            ) {
                 budgetMin = null;
             }
             if (budgetMin !== state.filters.budget_min) {
@@ -425,7 +435,12 @@ export default new Vuex.Store({
             }
 
             let budgetMax = query.budget_max ? parseInt(query.budget_max, 10) : NaN;
-            if (isNaN(budgetMax) || budgetMax < state.filtersRanges.budget_min || budgetMax > state.filtersRanges.budget_max || (budgetMin !== null && budgetMax < budgetMin)) {
+            if (
+                isNaN(budgetMax) ||
+                budgetMax < state.filtersRanges.budget_min ||
+                budgetMax > state.filtersRanges.budget_max ||
+                (budgetMin !== null && budgetMax < budgetMin)
+            ) {
                 budgetMax = null;
             }
             if (budgetMax !== state.filters.budget_max) {
@@ -441,7 +456,11 @@ export default new Vuex.Store({
             }
 
             let popularityMin = query.popularity_min ? parseFloat(query.popularity_min) : NaN;
-            if (! isFinite(popularityMin) || popularityMin < state.filtersRanges.popularity_min || popularityMin > state.filtersRanges.popularity_max) {
+            if (
+                !isFinite(popularityMin) ||
+                popularityMin < state.filtersRanges.popularity_min ||
+                popularityMin > state.filtersRanges.popularity_max
+            ) {
                 popularityMin = null;
             }
             if (popularityMin !== state.filters.popularity_min) {
@@ -449,7 +468,12 @@ export default new Vuex.Store({
             }
 
             let popularityMax = query.popularity_max ? parseFloat(query.popularity_max) : NaN;
-            if (! isFinite(popularityMax) || popularityMax < state.filtersRanges.popularity_min || popularityMax > state.filtersRanges.popularity_max || (popularityMin !== null && popularityMax < popularityMin)) {
+            if (
+                !isFinite(popularityMax) ||
+                popularityMax < state.filtersRanges.popularity_min ||
+                popularityMax > state.filtersRanges.popularity_max ||
+                (popularityMin !== null && popularityMax < popularityMin)
+            ) {
                 popularityMax = null;
             }
             if (popularityMax !== state.filters.popularity_max) {
@@ -482,7 +506,11 @@ export default new Vuex.Store({
             }
 
             let revenueMin = query.revenue_min ? parseInt(query.revenue_min) : NaN;
-            if (isNaN(revenueMin) || revenueMin < state.filtersRanges.revenue_min || revenueMin > state.filtersRanges.revenue_max) {
+            if (
+                isNaN(revenueMin) ||
+                revenueMin < state.filtersRanges.revenue_min ||
+                revenueMin > state.filtersRanges.revenue_max
+            ) {
                 revenueMin = null;
             }
             if (revenueMin !== state.filters.revenue_min) {
@@ -490,7 +518,12 @@ export default new Vuex.Store({
             }
 
             let revenueMax = query.revenue_max ? parseInt(query.revenue_max) : NaN;
-            if (isNaN(revenueMax) || revenueMax < state.filtersRanges.revenue_min || revenueMax > state.filtersRanges.revenue_max || (revenueMin !== null && revenueMax < revenueMin)) {
+            if (
+                isNaN(revenueMax) ||
+                revenueMax < state.filtersRanges.revenue_min ||
+                revenueMax > state.filtersRanges.revenue_max ||
+                (revenueMin !== null && revenueMax < revenueMin)
+            ) {
                 revenueMax = null;
             }
             if (revenueMax !== state.filters.revenue_max) {
@@ -498,7 +531,11 @@ export default new Vuex.Store({
             }
 
             let runtimeMin = query.runtime_min ? parseFloat(query.runtime_min) : NaN;
-            if (! isFinite(runtimeMin) || runtimeMin < state.filtersRanges.runtime_min || runtimeMin > state.filtersRanges.runtime_max) {
+            if (
+                !isFinite(runtimeMin) ||
+                runtimeMin < state.filtersRanges.runtime_min ||
+                runtimeMin > state.filtersRanges.runtime_max
+            ) {
                 runtimeMin = null;
             }
             if (runtimeMin !== state.filters.runtime_min) {
@@ -506,14 +543,23 @@ export default new Vuex.Store({
             }
 
             let runtimeMax = query.runtime_max ? parseFloat(query.runtime_max) : NaN;
-            if (! isFinite(runtimeMax) || runtimeMax < state.filtersRanges.runtime_min || runtimeMax > state.filtersRanges.runtime_max || (runtimeMin !== null && runtimeMax < runtimeMin)) {
+            if (
+                !isFinite(runtimeMax) ||
+                runtimeMax < state.filtersRanges.runtime_min ||
+                runtimeMax > state.filtersRanges.runtime_max ||
+                (runtimeMin !== null && runtimeMax < runtimeMin)
+            ) {
                 runtimeMax = null;
             }
             if (runtimeMax !== state.filters.runtime_max) {
                 commit('setFilter', { filter: 'runtime_max', value: runtimeMax });
             }
 
-            let spokenLanguages = query.spoken_languages ? (Array.isArray(query.spoken_languages) ? query.spoken_languages : [query.spoken_languages]) : [];
+            let spokenLanguages = query.spoken_languages
+                ? Array.isArray(query.spoken_languages)
+                    ? query.spoken_languages
+                    : [query.spoken_languages]
+                : [];
             commit('setFilter', { filter: 'spoken_languages', value: spokenLanguages });
 
             let status = query.status ? query.status : null;
@@ -522,7 +568,11 @@ export default new Vuex.Store({
             }
 
             let voteAverageMin = query.vote_average_min ? parseFloat(query.vote_average_min) : NaN;
-            if (! isFinite(voteAverageMin) || voteAverageMin < state.filtersRanges.vote_average_min || voteAverageMin > state.filtersRanges.vote_average_max) {
+            if (
+                !isFinite(voteAverageMin) ||
+                voteAverageMin < state.filtersRanges.vote_average_min ||
+                voteAverageMin > state.filtersRanges.vote_average_max
+            ) {
                 voteAverageMin = null;
             }
             if (voteAverageMin !== state.filters.vote_average_min) {
@@ -530,7 +580,12 @@ export default new Vuex.Store({
             }
 
             let voteAverageMax = query.vote_average_max ? parseFloat(query.vote_average_max) : NaN;
-            if (! isFinite(voteAverageMax) || voteAverageMax < state.filtersRanges.vote_average_min || voteAverageMax > state.filtersRanges.vote_average_max || (voteAverageMin !== null && voteAverageMax < voteAverageMin)) {
+            if (
+                !isFinite(voteAverageMax) ||
+                voteAverageMax < state.filtersRanges.vote_average_min ||
+                voteAverageMax > state.filtersRanges.vote_average_max ||
+                (voteAverageMin !== null && voteAverageMax < voteAverageMin)
+            ) {
                 voteAverageMax = null;
             }
             if (voteAverageMax !== state.filters.vote_average_max) {
@@ -538,7 +593,11 @@ export default new Vuex.Store({
             }
 
             let voteCountMin = query.vote_count_min ? parseInt(query.vote_count_min, 10) : NaN;
-            if (isNaN(voteCountMin) || voteCountMin < state.filtersRanges.vote_count_min || voteCountMin > state.filtersRanges.vote_count_max) {
+            if (
+                isNaN(voteCountMin) ||
+                voteCountMin < state.filtersRanges.vote_count_min ||
+                voteCountMin > state.filtersRanges.vote_count_max
+            ) {
                 voteCountMin = null;
             }
             if (voteCountMin !== state.filters.vote_count_min) {
@@ -546,7 +605,12 @@ export default new Vuex.Store({
             }
 
             let voteCountMax = query.vote_count_max ? parseInt(query.vote_count_max, 10) : NaN;
-            if (isNaN(voteCountMax) || voteCountMax < state.filtersRanges.vote_count_min || voteCountMax > state.filtersRanges.vote_count_max || (voteCountMin !== null && voteCountMax < voteCountMin)) {
+            if (
+                isNaN(voteCountMax) ||
+                voteCountMax < state.filtersRanges.vote_count_min ||
+                voteCountMax > state.filtersRanges.vote_count_max ||
+                (voteCountMin !== null && voteCountMax < voteCountMin)
+            ) {
                 voteCountMax = null;
             }
             if (voteCountMax !== state.filters.vote_count_max) {
@@ -561,10 +625,10 @@ export default new Vuex.Store({
                 }
 
                 dispatch('loadData', query)
-                    .then(response => {
+                    .then((response) => {
                         resolve(response);
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         reject(error);
                     });
             });
@@ -574,21 +638,22 @@ export default new Vuex.Store({
             return new Promise((resolve, reject) => {
                 commit('setLoading', true);
 
-                window.axios.post('/list', {
-                    ...query,
-                    page: (query.page ? query.page : state.currentPageNumber) - 1, //перед отправкой запроса причёсываем нумерацию
-                    page_size: query.page_size ? query.page_size : state.pageSize,  //чтобы случайно не загрузить всю базу
-                })
-                    .then(response => {
+                window.axios
+                    .post('/list', {
+                        ...query,
+                        page: (query.page ? query.page : state.currentPageNumber) - 1, //перед отправкой запроса причёсываем нумерацию
+                        page_size: query.page_size ? query.page_size : state.pageSize, //чтобы случайно не загрузить всю базу
+                    })
+                    .then((response) => {
                         console.log(response.data); //TODO удалить
 
                         const data = response.data;
 
-                        if (! data.hasOwnProperty('ok') || data.ok !== true) {
+                        if (!data.hasOwnProperty('ok') || data.ok !== true) {
                             throw new Error('Response is not ok =((');
                         }
 
-                        if (! data.hasOwnProperty('data_size') || data.data_size === 0) {
+                        if (!data.hasOwnProperty('data_size') || data.data_size === 0) {
                             throw new Error('Data size is 0');
                         }
 
@@ -600,14 +665,16 @@ export default new Vuex.Store({
 
                         for (let movie of movies) {
                             if (movie.belongs_to_collection !== null) {
-                                if (state.collections.find(e => e.id === movie.belongs_to_collection.id) === undefined) {
+                                if (
+                                    state.collections.find((e) => e.id === movie.belongs_to_collection.id) === undefined
+                                ) {
                                     commit('addCollection', movie.belongs_to_collection);
                                 }
                             }
 
                             if (movie.production_companies !== null) {
                                 for (let company of movie.production_companies) {
-                                    if (state.companies.find(e => e.id === company.id) === undefined) {
+                                    if (state.companies.find((e) => e.id === company.id) === undefined) {
                                         commit('addCompany', company);
                                     }
                                 }
@@ -615,7 +682,9 @@ export default new Vuex.Store({
 
                             if (movie.production_countries !== null) {
                                 for (let country of movie.production_countries) {
-                                    if (state.countries.find(e => e.iso_3166_1 === country.iso_3166_1) === undefined) {
+                                    if (
+                                        state.countries.find((e) => e.iso_3166_1 === country.iso_3166_1) === undefined
+                                    ) {
                                         commit('addCountry', country);
                                     }
                                 }
@@ -623,7 +692,7 @@ export default new Vuex.Store({
 
                             if (movie.genres !== null) {
                                 for (let genre of movie.genres) {
-                                    if (state.genres.find(e => e.id === genre.id) === undefined) {
+                                    if (state.genres.find((e) => e.id === genre.id) === undefined) {
                                         commit('addGenre', genre);
                                     }
                                 }
@@ -631,7 +700,7 @@ export default new Vuex.Store({
 
                             if (movie.spoken_languages !== null) {
                                 for (let language of movie.spoken_languages) {
-                                    if (state.languages.find(e => e.iso_639_1 === language.iso_639_1) === undefined) {
+                                    if (state.languages.find((e) => e.iso_639_1 === language.iso_639_1) === undefined) {
                                         commit('addLanguage', language);
                                     }
                                 }
@@ -646,7 +715,7 @@ export default new Vuex.Store({
 
                         resolve(data.data_size);
                     })
-                    .catch(error => {
+                    .catch((error) => {
                         reject(error); //TODO обработка ошибки загрузки
                     })
                     .finally(() => {

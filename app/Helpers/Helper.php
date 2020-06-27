@@ -641,7 +641,7 @@ class Helper
         if (array_key_exists($code, self::COUNTRIES)) {
             return self::COUNTRIES[$code];
         } else {
-            return null;
+            return;
         }
     }
 
@@ -668,7 +668,7 @@ class Helper
         if (array_key_exists($code, self::languages($type))) {
             return self::languages($type)[$code];
         } else {
-            return null;
+            return;
         }
     }
 }

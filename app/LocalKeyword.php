@@ -3,7 +3,7 @@
 namespace App;
 
 /**
- * App\LocalKeyword
+ * App\LocalKeyword.
  *
  * @property int $id
  * @property string $name

@@ -1,6 +1,7 @@
 @import 'app';
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -8,7 +9,8 @@ body {
     padding-top: 56px;
 }
 
-a.btn:disabled, button.btn:disabled {
+a.btn:disabled,
+button.btn:disabled {
     cursor: default;
 }
 

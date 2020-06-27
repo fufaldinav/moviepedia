@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\TmdbGenre
+ * App\TmdbGenre.
  *
  * @property int $id
  * @property string $name

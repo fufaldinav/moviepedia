@@ -35,6 +35,5 @@ class TableController extends Controller
      */
     public function list(Request $request)
     {
-        return null;
     }
 }

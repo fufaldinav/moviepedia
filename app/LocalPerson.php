@@ -3,7 +3,7 @@
 namespace App;
 
 /**
- * App\LocalPerson
+ * App\LocalPerson.
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\LocalPerson newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\LocalPerson newQuery()

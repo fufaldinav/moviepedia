@@ -3,7 +3,7 @@
 namespace App;
 
 /**
- * App\LocalMovie
+ * App\LocalMovie.
  *
  * @property int $id
  * @property bool $adult

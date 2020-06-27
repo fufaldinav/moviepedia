@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\TmdbCollection
+ * App\TmdbCollection.
  *
  * @property int $id
  * @property string $name

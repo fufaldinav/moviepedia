@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\TmdbMovie
+ * App\TmdbMovie.
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\TmdbGenre[] $genres
  * @property-read int|null $genres_count
